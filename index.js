@@ -13,7 +13,7 @@
         startGame : function(){
             let start = document.querySelector(".start");
             let reset = document.querySelector(".reset");
-            start.addEventListener("click",()=>this.gameState());
+            start.addEventListener("click",()=>this.gameState(),{once:true});
             reset.addEventListener("click",()=>this.resetBoard());
         },
 
@@ -74,7 +74,7 @@
             }
             return false;
         },
-        
+
         resetBoard : function(){
             this.board = [
                 ['','', ''],
