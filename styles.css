@@ -54,8 +54,8 @@ button:active{
 }
 
 .game-board{
-    height: clamp(200px,35vw,500px);
-    width: clamp(200px, 40vw,500px);
+    height: clamp(200px,30vw,500px);
+    width: clamp(200px, 35vw,500px);
     display: grid;
     grid-template: repeat(3,1fr) /repeat(3,1fr);
     justify-content: center;
@@ -81,6 +81,7 @@ button:active{
 
 .result{
     font-size: 28px;
+    font-weight: 600;
 }
 
 .player{
