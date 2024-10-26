@@ -29,8 +29,8 @@
                 this.playerMove();
             }
             else{
-                 this.result = "It's a tie!"
-                 this.resetBoard();
+                 this.result.textContent = "It's a tie!"
+                 setTimeout(()=>{this.resetBoard()},2000);
              }
         },
         playerMove : function(){
