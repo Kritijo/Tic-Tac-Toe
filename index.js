@@ -7,55 +7,63 @@
                     ['','', '']
                 ],
         currentPlayer : true,
+        grid : document.querySelector(".game-board"),
+        result : document.querySelector(".result"),
+        startGame : function(){
+            let start = document.querySelector(".start");
+            let reset = document.querySelector(".reset");
+            start.addEventListener("click",()=>{this.displayBoard(); this.gameState()});
+            reset.addEventListener("click",()=>this.resetBoard());
+        },
         displayBoard : function(){
-            console.log(this.board);
-            if(this.spaceAvailable>0){
-               this.playerMove();
-            } 
-            else{
-                alert("It's a tie!");
+            const cells = this.grid.children;
+            Array.from(cells).forEach((cell,idx)=>{
+                cell.textContent = this.board[Math.floor(idx/3)][idx%3];
+            }) 
+        },
+        gameState : function(){
+            if(this.checkWinner()){
                 this.resetBoard();
             }
+            else if(this.spaceAvailable>0){
+                this.playerMove();
+            }
+            else{
+                 this.result = "It's a tie!"
+                 this.resetBoard();
+             }
         },
         playerMove : function(){
-            let row, col;
-            while(true){
-                row = Number(prompt("Enter a row [0-2]"));
-                col = Number(prompt("Enter a column [0-2]"));
-
-                if(row>=0 && row<=2 && col>=0 && col<=2 && this.board[row][col]===''){
-                    break;
-                } else{
-                    alert("Invalid move! Please enter an empty space between [0-2]");
-                }
-            }
-            this.fillBoard(row,col);
+            this.grid.addEventListener("click",(e)=>{
+              let cell = e.target;
+              if(cell.textContent === ''){
+                 let idx = Array.from(this.grid.children).indexOf(cell);
+                 let row = Math.floor(idx/3);
+                 let col = idx%3;
+                 this.fillBoard(row,col);
+                 }
+            }); 
         },
         fillBoard : function(row,col){
             this.board[row][col] = this.currentPlayer ? 'x' : '0';
             this.spaceAvailable--;
-            if(this.checkWinner()){
-                this.resetBoard()
-            }
-            else{
-                this.currentPlayer = !this.currentPlayer;
-                this.displayBoard();
-            }
+            this.displayBoard();
+            this.checkWinner();
+            this.currentPlayer = !this.currentPlayer;
+            this.gameState();
         },
         checkWinner : function(){
             let symbol = this.currentPlayer ? 'x' : '0';
             for(let i = 0; i<3; i++){
                 if((this.board[i][0] === symbol && this.board[i][1] === symbol && this.board[i][2] === symbol) || 
                    (this.board[0][i] === symbol && this.board[1][i] === symbol && this.board[2][i] === symbol)){
-                    console.log(this.board);
-                    alert(`Player ${symbol} Wins!!`);
+                    this.result.textContent = `Player ${symbol=='x' ? 1 : 2} Wins!!`;
                     return true;
                 }
             }
             if((this.board[0][0] === symbol && this.board[1][1] === symbol && this.board[2][2] === symbol) ||
                 (this.board[0][2] === symbol && this.board[1][1] === symbol && this.board[2][0] === symbol)){
-                    console.log(this.board);
-                    alert(`Player ${symbol} Wins!!`);
+                    this.result.textContent = `Player ${symbol=='x' ? 1 : 2} Wins!!`;
                     return true;
             }
             return false;
@@ -68,13 +76,10 @@
             ]
             this.spaceAvailable = 9;
             this.currentPlayer = true;
-
-            console.log(this.board);
-            let reply = prompt("Play again?", "yes");
-            if(reply === 'yes'){
-                this.displayBoard();
-            }
+            this.result.textContent = '';
+            this.displayBoard();
         }
     }
-    game.displayBoard();
+    game.startGame();
 })();
+
