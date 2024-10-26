@@ -19,13 +19,14 @@
             const cells = this.grid.children;
             Array.from(cells).forEach((cell,idx)=>{
                 cell.textContent = this.board[Math.floor(idx/3)][idx%3];
-            }) 
+            })
+            this.result.textContent = this.currentPlayer ? `Player 1's turn` : `Player 2's turn`; 
         },
         gameState : function(){
             if(this.checkWinner()){
                 this.resetBoard();
             }
-            else if(this.spaceAvailable>0){
+            else if(this.spaceAvailable>=0){
                 this.playerMove();
             }
             else{
