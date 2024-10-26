@@ -9,6 +9,7 @@
         currentPlayer : false,
         grid : document.querySelector(".game-board"),
         result : document.querySelector(".result"),
+        player : document.querySelector(".player"),
 
         startGame : function(){
             let start = document.querySelector(".start");
@@ -23,6 +24,11 @@
                 cell.textContent = this.board[Math.floor(idx/3)][idx%3];
             }) 
             this.handleColour();
+            this.handlePlayer();
+        },
+
+        handlePlayer : function(){
+            this.player.textContent = this.currentPlayer ? `Player 1's turn!` : `Player 2's turn!`;
         },
 
         handleColour: function(){
@@ -39,6 +45,7 @@
             }
             if(this.spaceAvailable>0){
                 this.currentPlayer = !this.currentPlayer;
+                this.handlePlayer();
                 this.playerMove();
             }
             else{
