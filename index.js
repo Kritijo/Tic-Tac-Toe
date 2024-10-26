@@ -22,6 +22,14 @@
             Array.from(cells).forEach((cell,idx)=>{
                 cell.textContent = this.board[Math.floor(idx/3)][idx%3];
             }) 
+            this.handleColour();
+        },
+
+        handleColour: function(){
+            Array.from(this.grid.children).forEach((cell)=>{
+                if(cell.textContent==='x') cell.style.color = "#A50034";
+                else cell.style.color = "navy";
+            })
         },
 
         gameState : function(){
@@ -54,14 +62,14 @@
         },
 
         fillBoard : function(row,col){
-            this.board[row][col] = this.currentPlayer ? 'x' : '0';
+            this.board[row][col] = this.currentPlayer ? 'x' : 'o';
             this.spaceAvailable--;
             this.displayBoard();
             this.gameState();
         },
 
         checkWinner : function(){
-            let symbol = this.currentPlayer ? 'x' : '0';
+            let symbol = this.currentPlayer ? 'x' : 'o';
             for(let i = 0; i<3; i++){
                 if((this.board[i][0] === symbol && this.board[i][1] === symbol && this.board[i][2] === symbol) || 
                    (this.board[0][i] === symbol && this.board[1][i] === symbol && this.board[2][i] === symbol)){

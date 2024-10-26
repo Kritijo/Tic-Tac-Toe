@@ -66,7 +66,7 @@ button:active{
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 40px;
+    font-size: calc(30px + 2vw);
 }
 
 .cell:nth-child(2),:nth-child(5),:nth-child(8){
